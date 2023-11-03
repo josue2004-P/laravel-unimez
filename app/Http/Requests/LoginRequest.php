@@ -33,8 +33,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'email.required' => 'El email es obligatorio',
-            'email.email' => 'El email no es valido',
-            'email.exists' => 'Esa cuenta ya existe',
+            'email.email' => 'El email no es válido',
+            'email.exists' => 'Esa cuenta no existe',
             'password' => 'El password es obligatorio'
         ];
     }
