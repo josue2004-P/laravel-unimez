@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Producto;
-use App\Http\Resources\ProductoCollection;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Maestro;
 
-class ProductoController extends Controller
+
+class MaestroController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //Retorna respuesta
-        return new ProductoCollection(Producto::where('disponible',1)->orderBy('id','DESC')->get());
+        $maestro = Maestro::find($id);
+        return $maestro;
     }
 
     /**
@@ -33,10 +34,10 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Producto  $producto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show($id)
     {
         //
     }
@@ -45,10 +46,10 @@ class ProductoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Producto  $producto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -56,10 +57,10 @@ class ProductoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Producto  $producto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($id)
     {
         //
     }

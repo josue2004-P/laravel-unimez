@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pedido_productos', function (Blueprint $table) {
+        Schema::create('tarea_subidas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pedido_id')->constrained()->onDelete('cascade');
-            $table->foreignId('producto_id')->constrained()->onDelete('cascade');
-            $table->integer('cantidad');
+            $table->string("nombre");
+            $table->string("descripcion");
+            $table->string("id_alumno");
+            $table->string("id_materia");
+            $table->string("id_grupo");
+            $table->string("id_parcial");
+            $table->string("id_maestro");
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido_productos');
+        Schema::dropIfExists('tarea_subidas');
     }
 };

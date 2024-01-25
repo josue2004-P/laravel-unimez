@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model
+class MateriaAsignada extends Model
 {
-    use HasFactory;
+    protected $table = 'materia_asignada';
 }

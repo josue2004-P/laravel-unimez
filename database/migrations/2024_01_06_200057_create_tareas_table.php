@@ -13,8 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('admin')->default(0);
+        Schema::create('tareas', function (Blueprint $table) {
+            $table->id();
+            $table->text('nombre');
+            $table->text('descripcion');
+            $table->text('id_materia');
+            $table->text('id_grupo');
+            $table->text('id_maestro');
+            $table->text('id_parcial');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tareas');
     }
 };

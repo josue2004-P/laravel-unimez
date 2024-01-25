@@ -6,6 +6,17 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController; 
 use App\Http\Controllers\AuthController; 
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\Api\MateriasController;
+use App\Http\Controllers\Api\ParcialesController;
+use App\Http\Controllers\Api\AlumnoController;
+use App\Mail\EmergencyCallReceived;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Api\TareaController;
+
+//Maestro
+use App\Http\Controllers\Api\MaestroController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,20 +30,66 @@ use App\Http\Controllers\PedidoController;
 */
 
 Route::middleware('auth:sanctum')->group(function() {
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
     Route::post('/logout', [AuthController::class, 'logout']);
 
-        // Almacenar ordenes
-        Route::apiResource('/pedidos', PedidoController::class );
-
+    
+    //Maestros API
+    Route::controller(MaestroController::class)->group(function (){
+    
+    Route::get('/maestro/{id}', 'index');
+    
+    });
+    
 });
 
-//Ruta para la api
-Route::apiResource('/categorias',CategoriaController::class );
-Route::apiResource('/productos',ProductoController::class );
-
 //Autentificacion
-Route::post('/registro',[AuthController::class, 'register']);
+
+//Registrar Alumno
+Route::post('/registroAlumno',[AuthController::class, 'registerAlumno']);
+
 Route::post('/login',[AuthController::class, 'login']);
+
+Route::controller(MateriasController::class)->group(function (){
+
+    //Traer Materias
+    Route::get('/materias', 'index');
+
+    //Buscar Materias Asignadas del maestro
+    Route::get('/materia/{id}', 'show');
+
+    //Buscar Materias Poroid
+    Route::get('/materiaId/{id}', 'materiaId');
+});
+
+Route::controller(ParcialesController::class)->group(function (){
+    Route::get('/parciales', 'index');
+});
+
+//Alumnos 
+Route::controller(AlumnoController::class)->group(function (){
+    //Alumno no entregado
+    Route::get('/tareaNoSubida/{id}/{parcial}/{materia}', 'index');
+    Route::get('/tareaSubida/{id}/{parcial}/{materia}', 'tareaSubida');
+    Route::get('/tareaCalificada/{id}/{parcial}/{materia}', 'tareaCalificada');
+
+    //Alumnos Totales
+    Route::get('/totalAlumnos/{id}', 'totalAlumno');
+
+    //Alumno por Grupo
+    Route::get('/alumnoGrupo/{id}', 'alumnoGrupo');
+});
+
+Route::controller(TareaController::class)->group(function (){
+    Route::get('/tarea', 'index');
+    Route::post('/tarea', 'store');
+    Route::get('/tarea/{p}/{m}', 'show');
+
+    //Obetener detalle tarea por id, parcial y materia
+    Route::get('/tarea/{id}/{p}/{m}', 'tareaId');
+});
+
