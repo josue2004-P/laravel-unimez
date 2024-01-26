@@ -8,6 +8,7 @@ use App\Models\Alumno;
 use App\Models\TareaSubida;
 use App\Models\TareaCalificada;
 use App\Models\MateriaAsignada; 
+use App\Models\GrupoAsignado; 
 use App\Models\Materias;
 
 
@@ -19,19 +20,29 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    //Alumno por id
+    public function alumnoId($id)
+    {
+           
+        $alumnos = Alumno::find($id);
+        return $alumnos;
+    }
+
      //Total alumno
      public function totalALumno($id)
      {
        
-        $resultados = MateriaAsignada::where('id_maestro', $id)->get();
+        $resultados = GrupoAsignado::where('id_maestro', $id)->get();
         // Select only the 'id_maestro' attribute from each object in the collection
-        $ids = $resultados->pluck('id_maestro');
-        //Busca las materias del arreglo
-        $materias = Materias::whereIn('id_maestro', $ids)->get();
-        //Dame solos los id_grupo
-        $materias = $materias->pluck('id_grupo');
-        //Busca los alumnos que estan en id_grupo
-        $alumnos = Alumno::whereIn('id_grupo', $ids)->get();
+        $id_grupo = $resultados->pluck('id_grupo');
+        $cuatrimestre = $resultados->pluck('cuatrimestre');
+
+        //Busca el alumnos del mismo grupo
+        $conditions = [
+            ['id_grupo', '=', $id_grupo],
+            ['cuatrimestre', '=',$cuatrimestre ]
+         ];
+        $alumnos = Alumno::where($conditions)->get();
         $alumnos = $alumnos->count();
 
 

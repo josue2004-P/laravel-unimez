@@ -44,7 +44,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/maestro/{id}', 'index');
     
     });
-    
+
+
 });
 
 //Autentificacion
@@ -62,8 +63,13 @@ Route::controller(MateriasController::class)->group(function (){
     //Buscar Materias Asignadas del maestro
     Route::get('/materia/{id}', 'show');
 
-    //Buscar Materias Poroid
+    //Buscar Materias Por id
     Route::get('/materiaId/{id}', 'materiaId');
+
+    //MATERIAS POR CUATRIMESTRE Y ALUMNO (USER:ALUMNO)
+    Route::get('/materiasGrupo/{id}', 'materiasGrupo');
+
+
 });
 
 Route::controller(ParcialesController::class)->group(function (){
@@ -82,6 +88,9 @@ Route::controller(AlumnoController::class)->group(function (){
 
     //Alumno por Grupo
     Route::get('/alumnoGrupo/{id}', 'alumnoGrupo');
+    //Alumno Por Id
+    Route::get('/alumnoId/{id}', 'alumnoId');
+
 });
 
 Route::controller(TareaController::class)->group(function (){
